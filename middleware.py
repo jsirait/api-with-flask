@@ -101,7 +101,7 @@ def read_widgets():
 
 # get widget by id
 def read_widget_by_id(widget_id):
-    db_widget = DATA_PROVIDER.get_widget(id)
+    db_widget = DATA_PROVIDER.get_widget(widget_id)
     if db_widget:
         widget = {'ID': widget_id, 'Name': db_widget[1], 'Price': str(db_widget[2])}
         return jsonify(widget)

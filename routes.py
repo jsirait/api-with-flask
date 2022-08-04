@@ -15,7 +15,7 @@ def initialize_routes(app):
         app.add_url_rule('/api', 'list_routes', list_routes, methods=['GET'], defaults={'app': app})
         # widget rules
         app.add_url_rule('/api/widgets', 'read_widgets', read_widgets, methods=['GET'])
-        app.add_url_rule('/api/widgets/<int:widget_id>', 'widget_by_id', read_widget_by_id, methods=['GET'])
+        app.add_url_rule('/api/widgets/<int:widget_id>', 'read_widget_by_id', read_widget_by_id, methods=['GET'])
 
 
 def list_routes(app):

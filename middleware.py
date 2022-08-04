@@ -62,3 +62,24 @@ def person_update():
     except Exception as exc:
         print(exc)
         abort(404)
+
+def person_delete():
+    """Delete an existing user from the list"""
+    try:
+        data = request.get_json(force=True)
+        name = data['name']
+        # age = data['age']
+        # occupation = data['occupation']
+        people_names = [p['name'] for p in people_info]
+        if name and (name in people_names): # and age and occupation:
+            # find index of this person
+            idx = 0
+            while people_names[idx] != name:
+                idx += 1
+            people_info.pop(idx)
+            return jsonify({"Person " + name: "Deleted successfully"})
+        elif name not in people_names:
+            return jsonify("Person " + name + ": Not Found"), 404
+    except Exception as exc:
+        print(exc)
+        abort(404)

@@ -1,4 +1,4 @@
-from middleware import db, index, user_profile, person, person_add, person_update
+from middleware import db, index, user_profile, person, person_add, person_update, person_delete
 from flask import jsonify
 
 
@@ -10,6 +10,7 @@ def initialize_routes(app):
         app.add_url_rule('/api/person', 'person', person, methods=['GET'])
         app.add_url_rule('/api/person', 'person_add', person_add, methods=['POST'])
         app.add_url_rule('/api/person', 'person_update', person_update, methods=['PUT'])
+        app.add_url_rule('/api/person', 'person_delete', person_delete, methods=['DELETE'])
         app.add_url_rule('/api', 'list_routes', list_routes, methods=['GET'], defaults={'app': app})
 
 

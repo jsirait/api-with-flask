@@ -45,6 +45,7 @@ def person_add():
         print(exc)
         abort(400)
 
+
 def person_update():
     """Update information on existing user"""
     try:
@@ -67,6 +68,7 @@ def person_update():
         print(exc)
         abort(404)
 
+
 def person_delete():
     """Delete an existing user from the list"""
     try:
@@ -75,7 +77,7 @@ def person_delete():
         # age = data['age']
         # occupation = data['occupation']
         people_names = [p['name'] for p in people_info]
-        if name and (name in people_names): # and age and occupation:
+        if name and (name in people_names):  # and age and occupation:
             # find index of this person
             idx = 0
             while people_names[idx] != name:
@@ -107,4 +109,20 @@ def read_widget_by_id(widget_id):
         return jsonify(widget)
     else:
         # if widget with the specific id is not found
+        abort(404)
+
+
+def create_widget():
+    try:
+        data = request.get_json(force=True)
+        name = data['Name']
+        price = data['Price']
+    except Exception as e:
+        print(e)
+        abort(400)
+    new_id = DATA_PROVIDER.add_widget(name=name, price=price)
+    if new_id:
+        resp = {"New widget " + name + " is inserted with ID:": str(new_id)}
+        return jsonify(resp)
+    else:
         abort(404)

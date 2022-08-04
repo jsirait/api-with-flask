@@ -33,5 +33,20 @@ class DataService:
             input_values = (widget_id,)
             self.cursor.execute(sql_widget_by_id, input_values)
             all_widgets = self.cursor.fetchone()
-
         return all_widgets
+
+    def add_widget(self, name, price):
+        sql_add_widget = """insert into widgets (Name, Price) values (%s, %s)"""
+        input_values = (name, price)
+        try:
+            self.cursor.execute(sql_add_widget,input_values)
+            self.conn.commit()
+        except Exception as e:
+            self.conn.rollback()
+            print("Attempt to insert a new widget: transaction was rolled back", e)
+            return None
+
+        sql_new_widget_id = "select LAST_INSERT_ID()"
+        self.cursor.execute(sql_new_widget_id)
+        widget_post_id = self.cursor.fetchone()
+        return widget_post_id

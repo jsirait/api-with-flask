@@ -50,3 +50,16 @@ class DataService:
         self.cursor.execute(sql_new_widget_id)
         widget_post_id = self.cursor.fetchone()
         return widget_post_id
+
+    def delete_widget(self, name):
+        sql_delete_widget = """delete from widgets where name = %s"""
+        input_value = (name,)
+
+        try:
+            self.cursor.execute(sql_delete_widget, input_value)
+            self.conn.commit()
+        except Exception as e:
+            self.conn.rollback()
+            print("Attempt to insert a new widget: transaction was rolled back", e)
+            return None
+        return 1

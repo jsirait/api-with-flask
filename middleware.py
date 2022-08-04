@@ -126,3 +126,17 @@ def create_widget():
         return jsonify(resp)
     else:
         abort(404)
+
+def delete_widget():
+    try:
+        data = request.get_json(force=True)
+        name = data['Name']
+    except Exception as e:
+        print(e)
+        abort(400)
+    deleted = DATA_PROVIDER.delete_widget(name=name)
+    if deleted:
+        resp = {"New widget is deleted:": name}
+        return jsonify(resp)
+    else:
+        abort(404)

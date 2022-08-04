@@ -1,5 +1,5 @@
 from middleware import db, index, user_profile, person, person_add, person_update, person_delete
-from middleware import read_widgets, read_widget_by_id, create_widget
+from middleware import read_widgets, read_widget_by_id, create_widget, delete_widget
 from flask import jsonify
 
 
@@ -17,6 +17,7 @@ def initialize_routes(app):
         app.add_url_rule('/api/widgets', 'read_widgets', read_widgets, methods=['GET'])
         app.add_url_rule('/api/widgets/<int:widget_id>', 'read_widget_by_id', read_widget_by_id, methods=['GET'])
         app.add_url_rule('/api/widgets', 'create_widget', create_widget, methods=['POST'])
+        app.add_url_rule('/api/widgets', 'delete_widget', delete_widget, methods=['DELETE'])
 
 def list_routes(app):
     routes = []

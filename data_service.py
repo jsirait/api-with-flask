@@ -19,3 +19,19 @@ class DataService:
 
         self.conn = pymysql.connect(host=host, user=user, port=port, password=password, db=database)
         self.cursor = self.conn.cursor()
+
+    def get_widget(self, widget_id=None):
+        all_widgets = []
+
+        if widget_id is None:
+            sql_all_widgets = "select * from widgets order by ID asc"
+            self.cursor.execute(sql_all_widgets)
+            all_widgets = self.cursor.fetchall()
+        else:
+            sql_widget_by_id = """select * from widgets where ID = %s"""
+
+            input_values = (widget_id,)
+            self.cursor.execute(sql_widget_by_id, input_values)
+            all_widgets = self.cursor.fetchone()
+
+        return all_widgets

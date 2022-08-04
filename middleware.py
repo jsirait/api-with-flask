@@ -1,6 +1,10 @@
 """Middleware file for our function"""
 from flask import jsonify, request, abort
 
+from data_service import DataService
+
+DATA_PROVIDER = DataService()
+
 # a list of users
 people_info = [
     {'name': 'Katara', 'age': 15, 'occupation': 'water bender'},
@@ -82,4 +86,25 @@ def person_delete():
             return jsonify("Person " + name + ": Not Found"), 404
     except Exception as exc:
         print(exc)
+        abort(404)
+
+
+# Widgets
+# Get all widgets
+def read_widgets():
+    widgets = DATA_PROVIDER.get_widget()
+    widgets_dict = {}
+    for widget in widgets:
+        widgets_dict[widget[0]] = {'Name': widget[1], 'Price': widget[2]}
+    return jsonify(widgets_dict)
+
+
+# get widget by id
+def read_widget_by_id(widget_id):
+    db_widget = DATA_PROVIDER.get_widget(id)
+    if db_widget:
+        widget = {'ID': widget_id, 'Name': db_widget[1], 'Price': str(db_widget[2])}
+        return jsonify(widget)
+    else:
+        # if widget with the specific id is not found
         abort(404)
